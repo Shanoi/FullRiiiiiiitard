@@ -15,7 +15,7 @@
 
 <form action="index.php" method="get" role="form">
     <fieldset>
-        <label>Recherche : </label>
+        <label>Search : </label>
         <input type="text" class="form-control" name="recherche" value=""></td>
         </br>
         <input type="submit" class="btn" value="Go">
@@ -24,16 +24,11 @@
 
 </form>
 
-<?php
-
-echo "SELECT `name`, `price` FROM items WHERE `name` LIKE '%" . $_GET["recherche"] . "%'";
-
-?>
 <table>
 
     <tr>
-        <th> Titre A1</th>
-        <th> Titre A2</th>
+        <th> Objects</th>
+        <th> Price</th>
     </tr>
 
     <?php

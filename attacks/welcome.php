@@ -4,8 +4,6 @@
 <?php
 include("database_config.php");
 
-$error = "";
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $pwd = $_POST["pwd"];
@@ -20,13 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //echo print_r($row);
     
     if (!$row) {
-        $error = "Your Username is invalid";
+        echo "<div style=\"color:#cc0000;\">Your Username is invalid</div><br>";
+        echo "<a href=\"index.php\">Home</a>";
     } else {
-
-
         if ($row['pwd'] == $pwd) {
 
-            setcookie("session_username", $username, 2147483647);
+            setcookie("session_username", serialize($username), 2147483647);
 
             echo "<h1>Welcome " . $username . "</h1>";
 
@@ -38,17 +35,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         } else {
 
-            echo "Wrong password<br>";
+            echo "<div style=\"color:#cc0000;\">Wrong password</div><br>";
             echo "<a href=\"index.php\">Home</a>";
 
         }
     }
+} else {
+    echo "Don't try to fool me! LOGIN!";
+    header("Refresh: 2; url=index.php");
 }
 ?>
-
-<!--<h1>Welcome --><?php //echo $username; ?><!--</h1>-->
-
-<div style="color:#cc0000;"><?php echo $error; ?></div>
 
 </body>
 </html>

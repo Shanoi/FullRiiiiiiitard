@@ -13,10 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result->setFetchMode(PDO::FETCH_BOTH);
 
     $row = $result->fetch();
-    
+
     // Debug only
     //echo print_r($row);
-    
+
     if (!$row) {
         echo "<div style=\"color:#cc0000;\">Your Username is invalid</div><br>";
         echo "<a href=\"index.php\">Home</a>";

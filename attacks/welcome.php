@@ -7,10 +7,10 @@ include("database_config.php");
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $first_name = $_POST["first_name"];
+    $username = $_POST["username"];
     $pwd = $_POST["pwd"];
 
-    $result = $db->query("SELECT first_name, pwd FROM users WHERE first_name='$first_name'");
+    $result = $db->query("SELECT username, pwd FROM users WHERE username='$username'");
 
     $result->setFetchMode(PDO::FETCH_BOTH);
 
@@ -23,11 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($row['pwd'] == $pwd) {
 
-            echo "<h1>Welcome " . $first_name . "</h1>";
+            echo "<h1>Welcome " . $username . "</h1>";
 
         } else {
 
-            echo "Wrong password NOOB<br>";
+            echo "Wrong password<br>";
             echo "<a href=\"index.php\">Home</a>";
 
         }
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!--<h1>Welcome --><?php //echo $first_name; ?><!--</h1>-->
+<!--<h1>Welcome --><?php //echo $username; ?><!--</h1>-->
 
 <div style="color:#cc0000;"><?php echo $error; ?></div>
 

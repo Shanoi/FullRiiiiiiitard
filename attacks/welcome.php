@@ -10,17 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = $_POST["first_name"];
     $pwd = $_POST["pwd"];
 
-    $result = $db->query("SELECT first_name FROM users WHERE first_name='$first_name'");
+    $result = $db->query("SELECT first_name, pwd FROM users WHERE first_name='$first_name'");
 
-    if (!$result->fetch()) {
+    $result->setFetchMode(PDO::FETCH_BOTH);
+
+    $row = $result->fetch();
+
+    if (!$row) {
         $error = "Your First Name is invalid";
     } else {
 
-        $result2 = $db->query("SELECT pwd FROM users WHERE first_name='$first_name'");
-
-        $result2->setFetchMode(PDO::FETCH_BOTH);
-        
-        $row = $result2->fetch();
 
         if ($row['pwd'] == $pwd) {
 

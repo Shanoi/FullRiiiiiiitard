@@ -17,13 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row = $result->fetch();
 
     if (!$row) {
-        $error = "Your First Name is invalid";
+        $error = "Your Username is invalid";
     } else {
 
 
         if ($row['pwd'] == $pwd) {
 
+            setcookie("session_username", $username, 2147483647);
+
             echo "<h1>Welcome " . $username . "</h1>";
+            echo "<div><a href=\"logout.php\">Logout</a></div>";
 
         } else {
 

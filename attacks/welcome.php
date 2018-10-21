@@ -18,9 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $result2 = $db->query("SELECT pwd FROM users WHERE first_name='$first_name'");
 
-        echo $result2->fetch(PDO::FETCH_OBJ);
+        $result2->setFetchMode(PDO::FETCH_BOTH);
+        
+        $row = $result2->fetch();
 
-        if ($result2->fetch() == $pwd) {
+        if ($row['pwd'] == $pwd) {
 
             echo "<h1>Welcome " . $first_name . "</h1>";
 

@@ -20,7 +20,7 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
     $username = unserialize($_COOKIE["session_username"]);
     $pwd = unserialize($_COOKIE["session_password"]);
 
-    if (authenticate($username, $pwd, $db)) {
+    if (authenticate_cookies($username, $pwd, $db)) {
         require("guestbook.php");
     }
 }

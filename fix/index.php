@@ -27,8 +27,8 @@
 <table>
 
     <tr>
-        <th> Objets</th>
-        <th> Prix</th>
+        <th>Objects</th>
+        <th>Price</th>
     </tr>
 
     <?php

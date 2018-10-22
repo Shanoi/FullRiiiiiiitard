@@ -1,5 +1,41 @@
 <?php
 
+function authenticate_cookies($username, $pwd, $db) {
+    $result = $db->query("SELECT username, pwd, `admin` FROM users WHERE username='$username'");
+    
+    $result->setFetchMode(PDO::FETCH_BOTH);
+    
+    $row = $result->fetch();
+    
+    // Debug only
+    //echo print_r($row);
+    
+    if (!$row) {
+        echo "<div style=\"color:#cc0000;\">Your Username is invalid</div><br>";
+        echo "<a href=\"index.php\">Home</a>";
+    } else {
+        if ($row['admin'] == 1 && $row['pwd'] == $pwd) {
+            echo "<h1>Welcome " . $username . "</h1>";
+            echo "<div id=secret><a href=\"secret_service.php\">/!\ Secret Service /!\</a></div></br>";
+            echo "<div><a href=\"logout.php\">Logout</a></div>";
+
+            return true;
+        } else if ($row['pwd'] == unserialize($pwd)) {
+            echo "<h1>Welcome " . $username . "</h1>";
+            echo "<div><a href=\"logout.php\">Logout</a></div>";
+
+            return true;
+        } else {
+            echo "<div style=\"color:#cc0000;\">Wrong password</div><br>";
+            echo "<a href=\"index.php\">Home</a>";
+
+            return false;
+        }
+    }
+
+    return false;
+}
+
 function authenticate($username, $pwd, $db) {
     $result = $db->query("SELECT username, pwd, `admin` FROM users WHERE username='$username'");
     

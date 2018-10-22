@@ -3,6 +3,7 @@ include_once("session.php");
 include_once("database_config.php");
 
 header('Access-Control-Allow-Origin: http://trusted.com/ http://fix.com/');
+header("Content-Security-Policy: script-src 'self'");
 
 if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -20,7 +21,7 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
     $username = unserialize($_COOKIE["session_username"]);
     $pwd = unserialize($_COOKIE["session_password"]);
 
-    if (authenticate($username, $pwd, $db)) {
+    if (authenticate_cookies($username, $pwd, $db)) {
         require("guestbook.php");
     }
 }

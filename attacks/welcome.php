@@ -11,6 +11,7 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
 
         if (authenticate($username, $pwd, $db)) {
             require("guestbook.php");
+            require("library.php");
         }
     } else {
         echo "Don't try to fool me! LOGIN!";
@@ -22,6 +23,11 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
 
     if (authenticate_cookies($username, $pwd, $db)) {
         require("guestbook.php");
+        require("library.php");
     }
 }
 ?>
+
+
+</body>
+</html>

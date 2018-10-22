@@ -1,32 +1,29 @@
-<?php 
-$file="messages.txt";
-$messages=file_get_contents($file);
+<?php
+$file = "messages.txt";
+$messages = file_get_contents($file);
 ?>
 
-<head>
-    <script>
-    function save(){
+
+<script>
+    function save() {
         var callback = function () {
-            var show=document.getElementById("show");
-            show.innerHTML= xmlhttp.responseText;
+            var show = document.getElementById("show");
+            show.innerHTML = xmlhttp.responseText;
         };
-        var input=document.getElementById("message").value;
-        var url = "http://attacks:8080/guestbookleavemessage.php?message="+input;
+        var input = document.getElementById("message").value;
+        var url = "http://attacks/guestbookleavemessage.php?message=" + input;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open('GET', url, true);
         xmlhttp.onreadystatechange = callback;
         xmlhttp.send(null);
     }
-    </script>
-</head>
+</script>
 
-<body>
 
 <h1>Welcome to our Guest Book, Leave us a Message!</h1>
 <input id="message">
-<button onclick= 'save()' >Leave a message</button>
+<button onclick='save()'>Leave a message</button>
 <h2>All the messages left by guests </h2>
-<div id="show"><?php echo $messages?> </div>
+<div id="show"><?php echo $messages ?> </div>
 
-</body>
-</html>
+

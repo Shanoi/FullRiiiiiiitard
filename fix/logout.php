@@ -1,8 +1,17 @@
 <?php
 
-$session_cookie = "session_username";
-unset($_COOKIE[$session_cookie]);
-setcookie($session_cookie, '', time() - 3600);
+$session_username = "session_username";
+unset($_COOKIE[$session_username]);
+setcookie($session_username, '', time() - 3600);
+
+$session_password = "session_password";
+unset($_COOKIE[$session_password]);
+setcookie($session_password, '', time() - 3600);
+
+$session_admin = "session_admin";
+unset($_COOKIE[$session_admin]);
+setcookie($session_admin, '', time() - 3600);
+
 header("location: index.php");
 
 ?>

@@ -43,7 +43,6 @@
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_BOTH);
 
-
     while ($row = $stmt->fetch()) {
         echo "<tr>";
 

@@ -2,7 +2,7 @@
 include_once("session.php");
 include_once("database_config.php");
 
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: http://trusted.com/ http://fix.com/');
 
 if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

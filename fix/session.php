@@ -1,11 +1,12 @@
 <?php
 
 function authenticate($username, $pwd, $db) {
-    $result = $db->query("SELECT username, pwd, `admin` FROM users WHERE username='$username'");
+    $stmt = $db->prepare("SELECT username, pwd, `admin` FROM users WHERE username=:usr");
+    $stmt->bindParam(':usr', $username);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_BOTH);
     
-    $result->setFetchMode(PDO::FETCH_BOTH);
-    
-    $row = $result->fetch();
+    $row = $stmt->fetch();
     
     // Debug only
     //echo print_r($row);
@@ -15,9 +16,9 @@ function authenticate($username, $pwd, $db) {
         echo "<a href=\"index.php\">Home</a>";
     } else {
         if ($row['admin'] == 1 && $row['pwd'] == strtoupper(hash("sha256", $pwd))) {
-            setcookie("session_username", serialize($username), 2147483647);
-            setcookie("session_password", serialize(strtoupper(hash("sha256", $pwd))), 2147483647);
-            setcookie("session_admin", serialize($row['admin']), 2147483647);
+            setcookie("session_username", serialize($username), 2147483647, '/', null, null, true);
+            setcookie("session_password", serialize(strtoupper(hash("sha256", $pwd))), 2147483647, '/', null, null, true);
+            setcookie("session_admin", serialize($row['admin']), 2147483647, '/', null, null, true);
             
             echo "<h1>Welcome " . $username . "</h1>";
             echo "<div id=secret><a href=\"secret_service.php\">/!\ Secret Service /!\</a></div></br>";
@@ -25,8 +26,8 @@ function authenticate($username, $pwd, $db) {
 
             return true;
         } else if ($row['pwd'] == $pwd) {
-            setcookie("session_username", serialize($username), 2147483647);
-            setcookie("session_password", serialize($pwd), 2147483647);
+            setcookie("session_username", serialize($username), 2147483647, '/', null, null, true);
+            setcookie("session_password", serialize($pwd), 2147483647, '/', null, null, true);
 
             echo "<h1>Welcome " . $username . "</h1>";
             echo "<div><a href=\"logout.php\">Logout</a></div>";

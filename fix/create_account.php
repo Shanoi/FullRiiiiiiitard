@@ -8,8 +8,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["pwd"];
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $insert_new_user = "INSERT INTO users (username, pwd) VALUES ('$username', '$password')";
-    $result = $db->exec($insert_new_user);
+    $insert_new_user = $db->prepare("INSERT INTO users (username, pwd) VALUES (:usr, :pwd)");
+    $result = $insert_new_user->execute([
+        ':usr' => $username,
+        ':pwd' => strtoupper(hash("sha256", $password))
+    ]);
     if ($result === false) {
         $error = "Your username and / or password is invalid";
     } else {

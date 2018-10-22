@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS saw.users (
   ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
 
-INSERT IGNORE INTO users (`username`, `pwd`, `admin`) VALUES ("Alice", "0000", 1);
-INSERT IGNORE INTO users (`username`, `pwd`, `admin`) VALUES ("Bob", "PASSWORD", 0);
+INSERT IGNORE INTO users (`username`, `pwd`, `admin`) VALUES ("Alice", "9AF15B336E6A9619928537DF30B2E6A2376569FCF9D7E773ECCEDE65606529A0", 1);
+INSERT IGNORE INTO users (`username`, `pwd`, `admin`) VALUES ("Bob", "NotAVeryObviousPassword", 0);
 
 CREATE TABLE IF NOT EXISTS saw.items (
   id         INT(10) AUTO_INCREMENT NOT NULL,

@@ -4,6 +4,8 @@
 <?php
 include("database_config.php");
 
+header('Access-Control-Allow-Origin: *');
+
 if (!isset($_COOKIE["session_username"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST["username"];
@@ -25,7 +27,7 @@ if (!isset($_COOKIE["session_username"])) {
             if ($row['pwd'] == $pwd) {
     
                 setcookie("session_username", serialize($username), 2147483647);
-                
+
                 echo "<h1>Welcome " . $username . "</h1>";
 
                 if ($row['admin'] == 1) {

@@ -17,11 +17,10 @@
     <fieldset>
         <label>Search : </label>
         <input type="text" class="form-control" name="recherche" value=""></td>
-        </br>
+        <br>
         <input type="submit" class="btn" value="Go">
-        </br>
+        <br>
     </fieldset>
-
 </form>
 
 <table>

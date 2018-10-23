@@ -1,27 +1,29 @@
 <?php
 
-function is_admin($username, $pwd, $db) {
+function is_admin($username, $pwd, $db)
+{
     $stmt = $db->prepare("SELECT username, pwd, `admin` FROM users WHERE username=:usr");
     $stmt->bindParam(':usr', $username);
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_BOTH);
-    
+
     $row = $stmt->fetch();
 
     return $row['admin'] == 1;
 }
 
-function authenticate_cookies($username, $pwd, $db) {
+function authenticate_cookies($username, $pwd, $db)
+{
     $stmt = $db->prepare("SELECT username, pwd, `admin` FROM users WHERE username=:usr");
     $stmt->bindParam(':usr', $username);
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_BOTH);
-    
+
     $row = $stmt->fetch();
-    
+
     // Debug only
     //echo print_r($row);
-    
+
     if (!$row) {
         echo "<div style=\"color:#cc0000;\">Your Username is invalid</div><br>";
         echo "<a href=\"index.php\">Home</a>";
@@ -48,17 +50,18 @@ function authenticate_cookies($username, $pwd, $db) {
     return false;
 }
 
-function authenticate($username, $pwd, $db) {
+function authenticate($username, $pwd, $db)
+{
     $stmt = $db->prepare("SELECT username, pwd, `admin` FROM users WHERE username=:usr");
     $stmt->bindParam(':usr', $username);
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_BOTH);
-    
+
     $row = $stmt->fetch();
-    
+
     // Debug only
     //echo print_r($row);
-    
+
     if (!$row) {
         echo "<div style=\"color:#cc0000;\">Your Username is invalid</div><br>";
         echo "<a href=\"index.php\">Home</a>";
@@ -98,6 +101,71 @@ function authenticate($username, $pwd, $db) {
     }
 
     return false;
+}
+
+function tooMuchAttempt($username, $db)
+{
+    $stmt = $db->prepare("SELECT attempt FROM loginattempt WHERE username=:usr");
+    $stmt->bindParam(':usr', $username);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_BOTH);
+
+    $row = $stmt->fetch();
+
+    return $row['attempt'] >= 3;
+}
+
+function reinitializeAttempt($username, $db)
+{
+
+    $stmt = $db->prepare("SELECT attempt FROM loginattempt WHERE username=:usr");
+    $stmt->bindParam(':usr', $username);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_BOTH);
+
+    $row = $stmt->fetch();
+
+    if ($row) {
+
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $reinitialize = $db->prepare("UPDATE loginattempt SET `attempt` = :att WHERE `username`=:usr");
+        $result = $reinitialize->execute([
+            ':usr' => $username,
+            ':att' => 0
+        ]);
+    }
+}
+
+function logging($username, $db)
+{
+
+    $stmt = $db->prepare("SELECT attempt FROM loginattempt WHERE username=:usr");
+    $stmt->bindParam(':usr', $username);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_BOTH);
+
+    $row = $stmt->fetch();
+
+    if (!$row) {
+
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $insert_new_user = $db->prepare("INSERT INTO loginattempt (username, attempt) VALUES (:usr, :att)");
+        $result = $insert_new_user->execute([
+            ':usr' => $username,
+            ':att' => 0
+        ]);
+    } else {
+
+        $attempts = $row['attempt'] + 1;
+
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $update_user = $db->prepare("UPDATE loginattempt SET `attempt` = :att WHERE `username`=:usr");
+        $result = $update_user->execute([
+            ':usr' => $username,
+            ':att' => $attempts
+        ]);
+
+    }
 }
 
 ?>

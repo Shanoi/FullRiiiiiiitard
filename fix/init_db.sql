@@ -26,3 +26,16 @@ CREATE TABLE IF NOT EXISTS sawsecure.items (
 
 INSERT IGNORE INTO items (`name`, `price`) VALUES ("fan", "100");
 INSERT IGNORE INTO items (`name`, `price`) VALUES ("bulb", "50");
+
+DROP TABLE IF EXISTS sawsecure.loginattempt;
+
+CREATE TABLE IF NOT EXISTS sawsecure.loginattempt (
+  id          INT(10) AUTO_INCREMENT  NOT NULL,
+  `username`  VARCHAR(45)             NOT NULL,
+  `attempt`   INT(10)                 NOT NULL,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+

@@ -11,8 +11,15 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
         $pwd = $_POST["pwd"];
 
         if (authenticate($username, $pwd, $db)) {
+            reinitializeAttempt($username, $db);
             require("guestbook.php");
+        }else{
+            logging($username, $db);
+            if (tooMuchAttempt($username, $db)) {
+                error_log("Too much attempt", 0);
+            }
         }
+
     } else {
         echo "Don't try to fool me! LOGIN!";
         header("Refresh: 2; url=index.php");
@@ -22,7 +29,14 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
     $pwd = unserialize($_COOKIE["session_password"]);
 
     if (authenticate_cookies($username, $pwd, $db)) {
+        reinitializeAttempt($username, $db);
         require("guestbook.php");
+    }else{
+        logging($username, $db);
+        if (tooMuchAttempt($username, $db)) {
+            error_log("Too much password attempt !", 1,
+                "olivier.boulet@etu.unice.fr");
+        }
     }
 }
 ?>

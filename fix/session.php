@@ -1,8 +1,6 @@
 <?php
 
 function is_admin($username, $pwd, $db) {
-    //echo $username;
-    //echo $pwd;
     $stmt = $db->prepare("SELECT username, pwd, `admin` FROM users WHERE username=:usr");
     $stmt->bindParam(':usr', $username);
     $stmt->execute();

@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("database_config.php");
-
+header("Cache-Control: no-store, must-revalidate");
 header('Access-Control-Allow-Origin: *');
 
 if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])) {
@@ -11,6 +11,7 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
 
         if (authenticate($username, $pwd, $db)) {
             require("guestbook.php");
+            require("clear_message.php");
             require("library.php");
         }
     } else {

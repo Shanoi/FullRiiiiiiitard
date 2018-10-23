@@ -1,15 +1,16 @@
 <?php
 
-function authenticate_cookies($username, $pwd, $db) {
+function authenticate_cookies($username, $pwd, $db)
+{
     $result = $db->query("SELECT username, pwd, `admin` FROM users WHERE username='$username'");
-    
+
     $result->setFetchMode(PDO::FETCH_BOTH);
-    
+
     $row = $result->fetch();
-    
+
     // Debug only
     //echo print_r($row);
-    
+
     if (!$row) {
         echo "<div style=\"color:#cc0000;\">Your Username is invalid</div><br>";
         echo "<a href=\"index.php\">Home</a>";
@@ -20,12 +21,16 @@ function authenticate_cookies($username, $pwd, $db) {
             echo "<div><a href=\"logout.php\">Logout</a></div>";
 
             return true;
-        } else if ($row['pwd'] == unserialize($pwd)) {
+
+        } else if (($pwd == $row['pwd'])||($row['pwd'] == unserialize($pwd))) {
             echo "<h1>Welcome " . $username . "</h1>";
             echo "<div><a href=\"logout.php\">Logout</a></div>";
 
             return true;
         } else {
+            echo $pwd;
+            echo $row['pwd'];
+            echo unserialize($pwd);
             echo "<div style=\"color:#cc0000;\">Wrong password</div><br>";
             echo "<a href=\"index.php\">Home</a>";
 
@@ -36,16 +41,17 @@ function authenticate_cookies($username, $pwd, $db) {
     return false;
 }
 
-function authenticate($username, $pwd, $db) {
+function authenticate($username, $pwd, $db)
+{
     $result = $db->query("SELECT username, pwd, `admin` FROM users WHERE username='$username'");
-    
+
     $result->setFetchMode(PDO::FETCH_BOTH);
-    
+
     $row = $result->fetch();
-    
+
     // Debug only
     //echo print_r($row);
-    
+
     if (!$row) {
         echo "<div style=\"color:#cc0000;\">Your Username is invalid</div><br>";
         echo "<a href=\"index.php\">Home</a>";
@@ -86,7 +92,8 @@ function authenticate($username, $pwd, $db) {
     return false;
 }
 
-function is_admin($username, $pwd, $db) {
+function is_admin($username, $pwd, $db)
+{
     //echo $username;
     //echo $pwd;
     $stmt = $db->prepare("SELECT username, pwd, `admin` FROM users WHERE username=:usr");

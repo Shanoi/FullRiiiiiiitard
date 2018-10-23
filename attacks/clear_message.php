@@ -1,6 +1,6 @@
 <script>
-    function clear() {
-        console.log("coucou");
+    function clearBook() {
+        console.log("coucouj");
         var callback = function () {
             var show = document.getElementById("show");
             show.innerHTML = xmlhttp.responseText;
@@ -11,6 +11,7 @@
         xmlhttp.onreadystatechange = callback;
         xmlhttp.send(null);
     }
+
 </script>
 
-<button onclick='clear()'>Clear Messages</button>
+<button onclick='clearBook()'>Clear Messages</button>

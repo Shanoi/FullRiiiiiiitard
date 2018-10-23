@@ -54,7 +54,11 @@ function authenticate($username, $pwd, $db) {
             setcookie("session_username", serialize($username), 2147483647);
             setcookie("session_password", serialize(strtoupper(hash("sha256", $pwd))), 2147483647);
             setcookie("session_admin", serialize($row['admin']), 2147483647);
-            
+
+            $_COOKIE["session_username"] = serialize($username);
+            $_COOKIE["session_password"] = serialize(strtoupper(hash("sha256", $pwd)));
+            $_COOKIE["session_admin"] = serialize($row['admin']);
+
             echo "<h1>Welcome " . $username . "</h1>";
             echo "<div id=secret><a href=\"secret_service.php\">/!\ Secret Service /!\</a></div></br>";
             echo "<div><a href=\"logout.php\">Logout</a></div>";
@@ -63,6 +67,9 @@ function authenticate($username, $pwd, $db) {
         } else if ($row['pwd'] == $pwd) {
             setcookie("session_username", serialize($username), 2147483647);
             setcookie("session_password", serialize($pwd), 2147483647);
+
+            $_COOKIE["session_username"] = serialize($username);
+            $_COOKIE["session_password"] = serialize(strtoupper(hash("sha256", $pwd)));
 
             echo "<h1>Welcome " . $username . "</h1>";
             echo "<div><a href=\"logout.php\">Logout</a></div>";
@@ -77,6 +84,19 @@ function authenticate($username, $pwd, $db) {
     }
 
     return false;
+}
+
+function is_admin($username, $pwd, $db) {
+    //echo $username;
+    //echo $pwd;
+    $stmt = $db->prepare("SELECT username, pwd, `admin` FROM users WHERE username=:usr");
+    $stmt->bindParam(':usr', $username);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_BOTH);
+
+    $row = $stmt->fetch();
+
+    return $row['admin'] == 1;
 }
 
 ?>

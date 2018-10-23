@@ -1,6 +1,11 @@
 <?php
+include_once("session.php");
+include_once("database_config.php");
 $file = "messages.txt";
 $messages = file_get_contents($file);
+
+
+
 ?>
 
 
@@ -23,6 +28,14 @@ $messages = file_get_contents($file);
 <h1>Welcome to our Guest Book, Leave us a Message!</h1>
 <input id="message">
 <button onclick='save()'>Leave a message</button>
+<?php
+$session_admin = "session_admin";
+$session_username = "session_username";
+$session_password = "session_password";
+if(isset($_COOKIE[$session_admin]) || is_admin(unserialize($_COOKIE[$session_username]), unserialize($_COOKIE[$session_password]), $db)) {
+    require("clear_message.php");
+}
+?>
 <h2>All the messages left by guests </h2>
 <div id="show"><?php echo $messages ?> </div>
 

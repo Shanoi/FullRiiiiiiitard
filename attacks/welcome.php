@@ -11,7 +11,6 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
 
         if (authenticate($username, $pwd, $db)) {
             require("guestbook.php");
-            require("clear_message.php");
             require("library.php");
         }
     } else {

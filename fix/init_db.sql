@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS saw.users;
-DROP TABLE IF EXISTS saw.items;
+DROP TABLE IF EXISTS sawsecure.users;
+DROP TABLE IF EXISTS sawsecure.items;
 
-CREATE TABLE IF NOT EXISTS saw.users (
+CREATE TABLE IF NOT EXISTS sawsecure.users (
   id         INT(10) AUTO_INCREMENT NOT NULL,
   `username` VARCHAR(45)            NOT NULL,
   `pwd`      VARCHAR(255)           NOT NULL,
@@ -15,7 +15,7 @@ INSERT IGNORE INTO users (`username`, `pwd`, `admin`) VALUES ("Alice", "9AF15B33
 INSERT IGNORE INTO users (`username`, `pwd`, `admin`) VALUES ("Bob", "D6122B7AE501C237778C033BD8302CE67A872D486D76438988DD1BFB32D6F98D", 0);
 /* NotAVeryObviousPassword */
 
-CREATE TABLE IF NOT EXISTS saw.items (
+CREATE TABLE IF NOT EXISTS sawsecure.items (
   id         INT(10) AUTO_INCREMENT NOT NULL,
   `name`     VARCHAR(45)            NOT NULL,
   `price`    VARCHAR(255)           NOT NULL,

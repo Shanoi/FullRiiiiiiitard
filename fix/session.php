@@ -68,7 +68,11 @@ function authenticate($username, $pwd, $db) {
             setcookie("session_username", serialize($username), 2147483647, '/', null, null, true);
             setcookie("session_password", serialize($pwd), 2147483647, '/', null, null, true);
             setcookie("session_admin", serialize($row['admin']), 2147483647, '/', null, null, true);
-            
+
+            $_COOKIE["session_username"] = serialize($username);
+            $_COOKIE["session_password"] = serialize(strtoupper(hash("sha256", $pwd)));
+            $_COOKIE["session_admin"] = serialize($row['admin']);
+
             echo "<h1>Welcome " . $username . "</h1>";
             echo "<div id=secret><a href=\"secret_service.php\">/!\ Secret Service /!\</a></div></br>";
             echo "<div><a href=\"logout.php\">Logout</a></div>";
@@ -77,6 +81,9 @@ function authenticate($username, $pwd, $db) {
         } else if ($row['pwd'] == $pwd) {
             setcookie("session_username", serialize($username), 2147483647, '/', null, null, true);
             setcookie("session_password", serialize($pwd), 2147483647, '/', null, null, true);
+
+            $_COOKIE["session_username"] = serialize($username);
+            $_COOKIE["session_password"] = serialize(strtoupper(hash("sha256", $pwd)));
 
             echo "<h1>Welcome " . $username . "</h1>";
             echo "<div><a href=\"logout.php\">Logout</a></div>";

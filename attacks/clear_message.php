@@ -1,6 +1,5 @@
 <script>
     function clearBook() {
-        console.log("coucouj");
         var callback = function () {
             var show = document.getElementById("show");
             show.innerHTML = xmlhttp.responseText;

@@ -1,3 +1,6 @@
-<script src="clearbook.js"></script>
+<?php
+header("Content-Security-Policy: script-src 'self'");
 
-<button onclick='clearBook()'>Clear Messages</button>
+?>
+<button id="clearbook">Clear Messages</button>
+<script src="clearbook.js"></script>

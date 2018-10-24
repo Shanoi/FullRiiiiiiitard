@@ -6,7 +6,7 @@
 
     <p>Display your own message <br></p>
     <form method="post" action="welcome.php" enctype="multipart/form-data">
-        <input type="file" name="new_json_file">
+        <input type="file" name="new_json_file" accept=".json">
         <input type="submit" value="envoyé">
     </form>
 

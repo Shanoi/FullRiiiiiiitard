@@ -3,7 +3,7 @@
         <!DOCTYPE bibliotheque
 
                 [<!ELEMENT bibliotheque ANY> <!ENTITY bar SYSTEM
-                        "http://127.0.0.1/Projet/attacks/data.txt">]
+                        "http://attacks/data.txt">]
                 >
 <bibliotheque>
 <titre>&bar;</titre>

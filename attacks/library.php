@@ -6,8 +6,8 @@
 
     <p>Afficher vos propres messages ! <br></p>
     <form method="post" action="welcome.php" enctype="multipart/form-data">
-        <input type="file" name="new_xml_file">
-        <input type="submit" value="envoyé">
+        <input type="file" name="new_xml_file" accept=".xml">
+        <input type="submit" value="Send">
     </form>
 
 

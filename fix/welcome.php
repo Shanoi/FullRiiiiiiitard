@@ -31,12 +31,6 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
     if (authenticate_cookies($username, $pwd, $db)) {
         reinitializeAttempt($username, $db);
         require("guestbook.php");
-    }else{
-        logging($username, $db);
-        if (tooMuchAttempt($username, $db)) {
-            error_log("Too much password attempt !", 1,
-                "olivier.boulet@etu.unice.fr");
-        }
     }
 }
 ?>

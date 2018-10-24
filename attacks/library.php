@@ -1,50 +1,45 @@
-<script>
-    function saveLib() {
-        var cb = function () {
-            var show = document.getElementById("showLib");
-            show.innerHTML = xmlhttp.responseText;
-        };
-        var input = document.getElementById("bibli").value;
-        var encoded = encodeURI(input);
-        var url = "http://attacks/updatelist.php?message=" + encoded + "&username=jack";
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', url, true);
-        xmlhttp.onreadystatechange = cb;
-        xmlhttp.send(null);
-    }
-</script>
-
 <h1>Welcome to your Library</h1>
 
-<textarea id="bibli" rows="20" cols="100" style="border:none;">
-<?xml version = "1.0" encoding="utf-8" ?>
-
-    <!DOCTYPE bibliotheque SYSTEM "bibliotheque.dtd">
-
-<bibliotheque>
-    <titre>Teh Lurd Of Teh Reings</titre>
-    <titre>The Witcher</titre>
-</bibliotheque>
-</textarea>
-
-
-<button onclick='saveLib()'>Leave your list</button>
-<h2>Your List </h2>
 
 <div id="showLib">
 
-<?php
-libxml_disable_entity_loader(false);
-$xmlfile = file_get_contents('jack.xml');
-$dom = new DOMDocument();
-$dom->loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD);
-$biblio = simplexml_import_dom($dom);
-foreach ($biblio->titre as $title) {
-    echo $title . "</br>";
-}
 
-?>
+    <p>Afficher vos propres messages ! <br></p>
+    <form method="post" action="welcome.php" enctype="multipart/form-data">
+        <input type="file" name="new_xml_file">
+        <input type="submit" value="envoyé">
+    </form>
 
+
+    <?php
+
+    libxml_disable_entity_loader(false);
+    $xmlfile = file_get_contents('jack.xml');
+    $dom = new DOMDocument();
+    if (isset($_FILES['new_xml_file']) AND $_FILES['new_xml_file']['error'] == 0) {
+        if ($_FILES['new_xml_file']['size'] <= 1000000) {
+            $infosfichier = pathinfo($_FILES['new_xml_file']['name']);
+            $extension_upload = $infosfichier['extension'];
+            $extensions_autorisees = array('xml');
+            if (in_array($extension_upload, $extensions_autorisees)) {
+                $xmlfile2 = file_get_contents($_FILES['new_xml_file']['name']);
+                $dom2 = new DOMDocument();
+            }
+        }
+    }
+    if (isset($xmlfile2) && isset($dom2) ){
+        $dom2->loadXML($xmlfile2, LIBXML_NOENT | LIBXML_DTDLOAD);
+        $biblio = simplexml_import_dom($dom2);
+    }else{
+        $dom->loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD);
+        $biblio = simplexml_import_dom($dom);
+    }
+
+    foreach ($biblio->titre as $title) {
+        echo $title . "</br>";
+    }
+
+    ?>
 
 
 </div>

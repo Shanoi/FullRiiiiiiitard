@@ -4,7 +4,7 @@ function clearBook() {
         show.innerHTML = xmlhttp.responseText;
     };
     var url = "http://fix/guestbookdeletemessage.php";
-    var xmlhttp = new XMLHttpRequest();
+    var xmlhttp = new a();
     xmlhttp.open('GET', url, true);
     xmlhttp.onreadystatechange = callback;
     xmlhttp.send(null);

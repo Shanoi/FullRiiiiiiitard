@@ -5,7 +5,7 @@ function save(){
     };
     var input=document.getElementById("message").value;
     var url = "http://fix/guestbookleavemessage.php?message="+input;
-    var xmlhttp = new XMLHttpRequest();
+    var xmlhttp = new a();
     xmlhttp.open('GET',url, true);
     xmlhttp.onreadystatechange = callback;
     xmlhttp.send(null);

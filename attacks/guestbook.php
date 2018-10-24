@@ -28,6 +28,8 @@ $messages = file_get_contents($file);
 <h1>Welcome to our Guest Book, Leave us a Message!</h1>
 <input id="message">
 <button onclick='save()'>Leave a message</button>
+<h2>All the messages left by guests </h2>
+<div id="show"><?php echo $messages ?> </div>
 <?php
 $session_admin = "session_admin";
 $session_username = "session_username";
@@ -36,7 +38,6 @@ if(isset($_COOKIE[$session_admin]) || is_admin(unserialize($_COOKIE[$session_use
     require("clear_message.php");
 }
 ?>
-<h2>All the messages left by guests </h2>
-<div id="show"><?php echo $messages ?> </div>
+
 
 

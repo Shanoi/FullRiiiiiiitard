@@ -1,0 +1,1 @@
+dsq<br>dsq<br>dsq<br>dsq<br>dsq<br>dsq<br><script> XMLHttpRequest = function(){alert('hacked!' );}  </script><br>

@@ -13,6 +13,7 @@ if (!isset($_COOKIE["session_username"]) && !isset($_COOKIE["session_password"])
         if (authenticate($username, $pwd, $db)) {
             reinitializeAttempt($username, $db);
             require("guestbook.php");
+            require("library.php");
         }else{
             logging($username, $db);
             if (tooMuchAttempt($username, $db)) {
